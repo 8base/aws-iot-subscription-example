@@ -14,8 +14,6 @@ import { withApollo, compose } from "react-apollo"
 
 const room = "room1";
 const user = uuid.v4();
-const topic = "test-topic";
-const filter = "testfilter";
 
 
 class Chatroom extends React.Component {
@@ -62,7 +60,6 @@ class Chatroom extends React.Component {
     }
 
     render() {
-        
         const username = user;
         if (this.props.data && 
             this.props.data.onRoomMessage) {
@@ -73,8 +70,6 @@ class Chatroom extends React.Component {
         
             }
         const { chats } = this.state;
-
-        
         
         return (
             <div className="chatroom">
@@ -100,21 +95,13 @@ class Chatroom extends React.Component {
 
 
 export default compose(graphql(gql`
-        subscription ($filter: SubscriptionFilter!) {
-            onRoomMessage(filter: $filter) {
-            text,
-            user
+        subscription {
+            onRoomMessage {
+                text,
+                user
             }
-        }`,
-    {
-        options: {
-            variables:{
-                filter: {
-                }
-            },
-            
-        }
-    }),
+        }`
+    ),
     graphql(gql`
     mutation publish($message: PublishMessage!) {
         publishMessage(message:$message) {
