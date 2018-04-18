@@ -13,28 +13,15 @@ import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemo
 
 import { SubscriptionEnvironment } from "aws-iot-subscription-client";
 
+import { SubscriptionClientLink } from "@8base/sdk";
 
 const idToken = "";
-
-const cloudClient = SubscriptionEnvironment.CloudClient( {
-  transport: SubscriptionEnvironment.Transport.Iot({
-    region: "",
-    iotEndpoint: "",
-    debug: false
-  }),
-  resolver: SubscriptionEnvironment.Auth.Cognito({
-    region: "",
-    identityPoolId: "",
-    userPoolId: ""
-  })
-})
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   operation.setContext( {
       headers: {
-        'token': idToken,
-        'authorization': "master",
-        'account-id': ""
+        'authorization': idToken,
+        'account-id': "5ad4a742b8f1fb0917b60fe2"
     }
   });
 
@@ -43,7 +30,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 
 const link = ApolloLink.from([
   authMiddleware,
-  SubscriptionEnvironment.ClientApolloLink(cloudClient),
+  new SubscriptionClientLink(),
   new BatchHttpLink({ uri: "http://localhost:3000" })
 ]);
   
