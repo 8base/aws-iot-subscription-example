@@ -92,21 +92,17 @@ class Chatroom extends React.Component {
     }
 }
 
-
-
 export default compose(graphql(gql`
-        subscription {
-            onRoomMessage {
-                text,
-                user
-            }
-        }`
+    subscription ChatRoomSubscription {
+        Chat(filter:{mutation_in:[create]}) {
+            node { id, message }
+        }
+    }`
     ),
     graphql(gql`
-    mutation publish($message: PublishMessage!) {
-        publishMessage(message:$message) {
-          success
+    mutation CreateMessage($message: String!) {
+        chatCreate(data:{message:$message}) {
+            id
         }
-      }
-    `)
+    }`)
   )(Chatroom);
