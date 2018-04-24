@@ -10,20 +10,24 @@ import { ApolloClient } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 
-
 import { Subscription } from "aws-iot-subscription-client";
 
 import { SubscriptionClientLink } from "@8base/sdk";
 
-const idToken = "";
+localStorage.setItem('isLoggin', "");
 
 const authMiddleware = new ApolloLink((operation, forward) => {
-  operation.setContext( {
-      headers: {
-        'authorization': idToken,
-        'account-id': ""
-    }
-  });
+  let headers = {};
+
+  if (localStorage.getItem("idToken")) {
+    headers.idToken = localStorage.getItem("idToken")
+  }
+
+  if (localStorage.getItem("account-id")) {
+    headers["account-id"] = localStorage.getItem("account-id")
+  }
+
+  operation.setContext( { headers });
 
   return forward(operation);
 });
