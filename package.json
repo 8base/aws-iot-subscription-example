@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@8base/sdk": "0.0.45",
+    "@8base/sdk": "0.0.48",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.11",
@@ -19,7 +19,8 @@
     "apollo-link": "^1.2.1",
     "amazon-cognito-identity-js": "^2.0.2",
     "aws-sdk": "^2.214.1",
-    "aws-iot-subscription-client": "^0.0.1"
+    "aws-iot-subscription-client": "^0.0.1",
+    "react-router-dom": "^4.2.2"
   },
   "scripts": {
     "start": "PORT=3006 react-scripts start",

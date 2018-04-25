@@ -5,11 +5,10 @@ import './App.css';
 import Message from './Message.js';
 
 
-
 import * as uuid from "uuid";
 import { graphql } from "react-apollo";
 import gql from "graphql-tag";
-import { withApollo, compose } from "react-apollo"
+import { compose } from "react-apollo"
 
 const user = uuid.v4();
 
@@ -24,6 +23,9 @@ class Chatroom extends React.Component {
 
         this.submitMessage = this.submitMessage.bind(this);
 
+        if (!localStorage.getItem("idToken")) {
+            this.props.history.replace("/")
+        }
     }
 
     componentDidMount() {
@@ -39,6 +41,7 @@ class Chatroom extends React.Component {
     }
 
     submitMessage(e) {
+
         e.preventDefault();
         
         this.props.mutate({
@@ -48,18 +51,6 @@ class Chatroom extends React.Component {
         });
 
         ReactDOM.findDOMNode(this.refs.msg).value = "";
-    }
-
-    login(e) {
-        e.preventDefault();
-        
-        console.log(this.props)
-        this.props.mutate({
-            variables: {
-                email: ReactDOM.findDOMNode(this.refs.emailInput).value,
-                password: ReactDOM.findDOMNode(this.refs.passInput).value
-            }
-        });
     }
 
     render() {
@@ -76,13 +67,11 @@ class Chatroom extends React.Component {
         
         return (
             <div className="chatroom">
-                
+
                 <h3>Chilltime</h3>
                 <ul className="chats" ref="chats">
                     {
-                        chats.map((chat) => 
-                            <Message chat={chat} user={username} />
-                        )
+                        React.Children.toArray(chats.map((chat) => <Message chat={chat} user={username} />))
                     }
                 </ul>
 
@@ -109,19 +98,6 @@ export default compose(
         mutation CreateMessage($message: String!) {
             chatCreate(data:{message:$message}) {
                 id
-            }
-        }`
-    ),
-    graphql(gql`
-        mutation Login($email:String!, $password:String!) {
-            userLogin(
-                data: {
-                    email: $email,
-                    password: $password
-                }
-            ) 
-            {
-                success auth { idToken }
             }
         }`
     )

@@ -8,19 +8,16 @@ import { BatchHttpLink } from 'apollo-link-batch-http';
 import { ApolloLink } from 'apollo-link';
 import { ApolloClient } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
-import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
-
-import { Subscription } from "aws-iot-subscription-client";
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import { SubscriptionClientLink } from "@8base/sdk";
 
-localStorage.setItem('isLoggin', "");
 
 const authMiddleware = new ApolloLink((operation, forward) => {
   let headers = {};
 
   if (localStorage.getItem("idToken")) {
-    headers.idToken = localStorage.getItem("idToken")
+    headers.Authorization = localStorage.getItem("idToken")
   }
 
   if (localStorage.getItem("account-id")) {
