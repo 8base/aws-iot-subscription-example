@@ -32,7 +32,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 const link = ApolloLink.from([
   authMiddleware,
   new SubscriptionClientLink(),
-  new BatchHttpLink({ uri: "http://localhost:3000" })
+  new BatchHttpLink({ uri: "" })
 ]);
   
 

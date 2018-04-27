@@ -31,7 +31,8 @@ class Login extends React.Component {
 
             this.props.history.replace("/chat");
         })
-        .catch(() => {
+        .catch((ex) => {
+            console.log(ex.message)
         })
 
     }
