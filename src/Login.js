@@ -29,6 +29,7 @@ class Login extends React.Component {
                 console.log(ex.message)
             }
 
+            localStorage.setItem("chat-username", this.refs.emailInput)
             this.props.history.replace("/chat");
         })
         .catch((ex) => {

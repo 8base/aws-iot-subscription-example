@@ -46,7 +46,8 @@ class Chatroom extends React.Component {
         
         this.props.mutate({
             variables: {
-                message: ReactDOM.findDOMNode(this.refs.msg).value
+                message: ReactDOM.findDOMNode(this.refs.msg).value,
+                user: user
             }
         });
 
@@ -54,12 +55,13 @@ class Chatroom extends React.Component {
     }
 
     render() {
-        const username = user;
+        
+        const username = user; //localStorage.getItem("chat-username");
         if (this.props.data && 
             this.props.data.Chat) {
                 this.state.chats.push( {
                     content: this.props.data.Chat.node.message,
-                    user: "user"
+                    user: this.props.data.Chat.node.user,
                 })
         
             }
@@ -90,13 +92,13 @@ export default compose(
     graphql(gql`
         subscription ChatRoomSubscription {
             Chat(filter:{mutation_in:[create]}) {
-                node { id, message }
+                node { message, user }
             }
         }`
     ),
     graphql(gql`
-        mutation CreateMessage($message: String!) {
-            chatCreate(data:{message:$message}) {
+        mutation CreateMessage($message: String! $user: String) {
+            chatCreate(data:{message:$message user:$user}) {
                 id
             }
         }`
