@@ -19,7 +19,6 @@
     "apollo-link": "^1.2.1",
     "amazon-cognito-identity-js": "^2.0.2",
     "aws-sdk": "^2.214.1",
-    "aws-iot-subscription-client": "^0.0.1",
     "react-router-dom": "^4.2.2"
   },
   "scripts": {
