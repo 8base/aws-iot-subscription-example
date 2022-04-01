@@ -14,7 +14,7 @@
     "apollo-link-batch-http": "^1.2.1",
     "apollo-cache-inmemory": "^1.1.11",
     "graphql-tag": "^2.8.0",
-    "aws-iot-device-sdk": "^2.2.1",
+    "aws-iot-device-sdk": "^2.2.12",
     "mqtt": "^2.17.0",
     "apollo-link": "^1.2.1",
     "amazon-cognito-identity-js": "^2.0.2",
